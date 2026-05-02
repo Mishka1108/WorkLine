@@ -1,46 +1,51 @@
-import { CommonModule } from '@angular/common';
-import { Component,HostListener } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, HostListener, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar {
+export class Navbar implements OnInit, OnDestroy {
   isScrolled = false;
   menuOpen = false;
- 
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
   ngOnInit(): void {
     this.checkScroll();
   }
- 
+
   ngOnDestroy(): void {
-    // component destroy-ზე body სუფთა იყოს
-    document.body.style.overflow = '';
-    document.body.style.width = '';
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.style.overflow = '';
+      document.body.style.width = '';
+    }
   }
- 
+
   @HostListener('window:scroll')
   onWindowScroll(): void {
     this.checkScroll();
   }
- 
+
   private checkScroll(): void {
-    this.isScrolled = window.scrollY > 20;
+    if (isPlatformBrowser(this.platformId)) {
+      this.isScrolled = window.scrollY > 20;
+    }
   }
- 
+
   toggleMenu(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     this.menuOpen = !this.menuOpen;
     if (this.menuOpen) {
-      // scroll ვბლოკავთ — position:fixed body-ზე scrollbar-ის გარეშე
       document.body.style.overflow = 'hidden';
       document.body.style.width = '100%';
       document.body.style.position = 'fixed';
       document.body.style.top = `-${window.scrollY}px`;
     } else {
-      // ვაბრუნებთ scroll-ს და პოზიციას
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
@@ -49,8 +54,10 @@ export class Navbar {
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
   }
- 
+
   closeMenu(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
     if (this.menuOpen) {
       this.menuOpen = false;
       const scrollY = document.body.style.top;
