@@ -1,0 +1,253 @@
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section class="c-hero">
+  <div class="wrap">
+
+    <p class="eyebrow">კანდიდატებისთვის</p>
+
+    <h1 class="c-hero__title">
+      შენი დრო.<br>
+      შენი სამუშაო.<br>
+      <em>შენი პირობები.</em>
+    </h1>
+
+    <p class="c-hero__sub">
+      WorkLine-ი ეძებს შენთვის სამუშაოს — სწრაფად, გამჭვირვალედ,
+      შენ გრაფიკზე. შენ ერთხელ რეგისტრირდები, დანარჩენს ჩვენ ვაკეთებთ.
+    </p>
+
+    <div class="c-hero__cta">
+      <a href="#register-form" class="btn-main">დარეგისტრირდი →</a>
+      <a href="#how" class="btn-link">როგორ მუშაობს ↓</a>
+    </div>
+
+    <div class="c-hero__stats">
+      <div class="stat">
+        <strong>500+</strong>
+        <span>დარეგისტრირებული კადრი</span>
+      </div>
+      <div class="stat__sep"></div>
+      <div class="stat">
+        <strong>24 სთ</strong>
+        <span>საშუალო რეაგირება</span>
+      </div>
+      <div class="stat__sep"></div>
+      <div class="stat">
+        <strong>120+</strong>
+        <span>პარტნიორი კომპანია</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ TICKER ════════════════════════════════════════════ -->
+<div class="ticker">
+  <div class="ticker__track">
+    <span>მოქნილი გრაფიკი</span><span class="sep">/</span>
+    <span>სწრაფი ანაზღაურება</span><span class="sep">/</span>
+    <span>გამჭვირვალე პირობები</span><span class="sep">/</span>
+    <span>გადამოწმებული შეთავაზებები</span><span class="sep">/</span>
+    <span>24/7 მხარდაჭერა</span><span class="sep">/</span>
+    <span>მოქნილი გრაფიკი</span><span class="sep">/</span>
+    <span>სწრაფი ანაზღაურება</span><span class="sep">/</span>
+    <span>გამჭვირვალე პირობები</span><span class="sep">/</span>
+    <span>გადამოწმებული შეთავაზებები</span><span class="sep">/</span>
+    <span>24/7 მხარდაჭერა</span><span class="sep">/</span>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ════════════════════════════════════ -->
+<section class="section" id="how">
+  <div class="wrap">
+
+    <header class="s-head">
+      <span class="eyebrow">პროცესი</span>
+      <h2>4 ნაბიჯი — სამუშაომდე</h2>
+      <p>სხვა სააგენტოებში კვირები სჭირდება. WorkLine-ში მეორე დღეს უკვე სამუშაოდ გადიხარ.</p>
+    </header>
+
+    <div class="steps">
+      <div class="step" *ngFor="let s of steps; let i = index">
+        <div class="step__num">{{ s.num }}</div>
+        <div class="step__body">
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.desc }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ COMPARE ════════════════════════════════════════ -->
+<section class="section section--ink" id="why">
+  <div class="wrap">
+
+    <header class="s-head s-head--inv">
+      <span class="eyebrow eyebrow--inv">რატომ WorkLine</span>
+      <h2>ჩვენ სხვანაირი ვართ</h2>
+      <p>განსხვავება სისტემაშია — არა სიტყვებში.</p>
+    </header>
+
+    <div class="compare">
+      <div class="compare__col compare__col--old">
+        <p class="compare__head">ტრადიციული სააგენტო</p>
+        <ul>
+          <li *ngFor="let item of compareOld"><span class="x">✕</span>{{ item }}</li>
+        </ul>
+      </div>
+
+      <div class="compare__div"></div>
+
+      <div class="compare__col compare__col--new">
+        <p class="compare__head compare__head--green">WorkLine</p>
+        <ul>
+          <li *ngFor="let item of compareNew"><span class="chk">✓</span>{{ item }}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ JOBS ══════════════════════════════════════════ -->
+<section class="section" id="jobs">
+  <div class="wrap">
+
+    <header class="s-head">
+      <span class="eyebrow">ახლა ხელმისაწვდომი</span>
+      <h2>პოპულარული პოზიციები</h2>
+      <p>რეალური შეთავაზებები, რომლებიც ახლა ელოდება კანდიდატებს.</p>
+    </header>
+
+    <div class="jobs">
+      <a href="#register-form" class="job" *ngFor="let j of jobs">
+        <div class="job__top">
+          <span class="job__sector">{{ j.sector }}</span>
+          <span class="job__badge" [class.job__badge--hot]="j.urgent">
+            {{ j.urgent ? 'გადაუდებელი' : 'აქტიური' }}
+          </span>
+        </div>
+        <h4>{{ j.title }}</h4>
+        <div class="job__meta">
+          <span>{{ j.location }}</span>
+          <span>{{ j.period }}</span>
+          <strong>{{ j.pay }}/დღე</strong>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ══════════════════════════════════ -->
+<section class="section section--tint" id="reviews">
+  <div class="wrap">
+
+    <header class="s-head">
+      <span class="eyebrow">გამოხმაურება</span>
+      <h2>ისინი უკვე მუშაობენ</h2>
+    </header>
+
+    <div class="testis">
+      <div class="testi" *ngFor="let t of testimonials">
+        <p class="testi__text">{{ t.text }}</p>
+        <div class="testi__author">
+          <div class="testi__av" [style.background]="t.color">{{ t.initials }}</div>
+          <div>
+            <p class="testi__name">{{ t.name }}</p>
+            <p class="testi__role">{{ t.role }}</p>
+          </div>
+        </div>
+        <div class="testi__stars">★★★★★</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ REGISTER ═════════════════════════════════════ -->
+<section class="section" id="register-form">
+  <div class="wrap">
+
+    <div class="reg">
+
+      <div class="reg__left">
+        <span class="eyebrow">დარეგისტრირდი</span>
+        <h2>5 წუთი.<br>სამუშაო — 24 საათში.</h2>
+        <p>
+          შეავსე მოკლე ფორმა. ჩვენ გადავხედავთ პროფილს და 24 საათში
+          გიგზავნით შეთავაზებებს შენ ადგილმდებარეობასთან ახლოს.
+        </p>
+        <ul class="perks">
+          <li *ngFor="let p of registerPerks">
+            <span class="perk-dot"></span>{{ p }}
+          </li>
+        </ul>
+      </div>
+
+      <form class="reg__form" (ngSubmit)="onSubmit()" #regForm="ngForm">
+
+        <div class="field">
+          <label>სახელი და გვარი</label>
+          <input type="text" [(ngModel)]="formData.name" name="name"
+            placeholder="მაგ. გიორგი ბერიძე" required />
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>ტელეფონი</label>
+            <input type="tel" [(ngModel)]="formData.phone" name="phone"
+              placeholder="+995 5XX XXX XXX" required />
+          </div>
+          <div class="field">
+            <label>ქალაქი</label>
+            <input type="text" [(ngModel)]="formData.city" name="city"
+              placeholder="თბილისი" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>სასურველი სფერო</label>
+          <select [(ngModel)]="formData.sector" name="sector" required>
+            <option value="" disabled selected>აირჩიე სფერო</option>
+            <option *ngFor="let s of sectors" [value]="s">{{ s }}</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>სამუშაო პერიოდი</label>
+          <div class="period-opts">
+            <label class="period-opt" *ngFor="let p of periods">
+              <input type="radio" [(ngModel)]="formData.period" name="period" [value]="p" />
+              <span>{{ p }}</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" [disabled]="submitted">
+          {{ submitted ? '✓ გაგზავნილია!' : 'გაგზავნე განაცხადი →' }}
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FOOTER CTA ════════════════════════════════════ -->
+<section class="fcta">
+  <div class="wrap">
+    <div class="fcta__inner">
+      <div>
+        <h3>კითხვა გაქვს?</h3>
+        <p>ჩვენი გუნდი ყოველთვის ხელმისაწვდომია.</p>
+      </div>
+      <div class="fcta__btns">
+        <a href="tel:+995" class="btn-main">დარეკე</a>
+        <a href="https://wa.me/995" class="btn-link btn-link--light" target="_blank">WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,349 @@
+
+
+<section class="hero">
+  <div class="hero__content">
+    <div class="hero__eyebrow">
+      <span class="hero__dot"></span>
+      სრული სახელმძღვანელო
+    </div>
+
+    <h1 class="hero__title">
+      როგორ მუშაობს<br>
+      <em>WorkLine</em>
+    </h1>
+
+    <p class="hero__sub">
+      გამჭვირვალე პროცესი — კომპანიებისთვის და კადრებისთვის.<br>
+      ნახეთ, როგორ ვაკავშირებთ სწორ ადამიანებს სწორ ადგილას.
+    </p>
+
+    <!-- mini flow diagram -->
+    <div class="hero__diagram">
+      <div class="hero__node">
+        <div class="hero__node-icon hero__node-icon--company">🏢</div>
+        <span>კომპანია</span>
+      </div>
+      <div class="hero__flow">
+        <div class="hero__flow-line"></div>
+        <div class="hero__flow-badge">WorkLine</div>
+        <div class="hero__flow-line hero__flow-line--rev"></div>
+      </div>
+      <div class="hero__node">
+        <div class="hero__node-icon hero__node-icon--worker">👤</div>
+        <span>კადრი</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__wave">
+    <svg viewBox="0 0 1440 72" preserveAspectRatio="none">
+      <path d="M0,36 C360,72 1080,0 1440,36 L1440,72 L0,72 Z" fill="#f8f7f4"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     AUDIENCE TOGGLE
+════════════════════════════════════════════ -->
+<div class="toggle">
+  <p class="toggle__label">აირჩიეთ თქვენი კატეგორია</p>
+  <div class="toggle__pills">
+    <button
+      class="toggle__pill"
+      [class.toggle__pill--active]="activeTab() === 'companies'"
+      (click)="setTab('companies')">
+      <span class="toggle__pill-icon">🏢</span>
+      <div>
+        <strong>კომპანიებისთვის</strong>
+        <small>გჭირდებათ კადრი?</small>
+      </div>
+    </button>
+    <div class="toggle__divider"></div>
+    <button
+      class="toggle__pill"
+      [class.toggle__pill--active]="activeTab() === 'workers'"
+      (click)="setTab('workers')">
+      <span class="toggle__pill-icon">👤</span>
+      <div>
+        <strong>კადრებისთვის</strong>
+        <small>ეძებთ სამუშაოს?</small>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     COMPANIES TAB
+════════════════════════════════════════════ -->
+@if (activeTab() === 'companies') {
+
+  <!-- 3-step flow -->
+  <section class="section process">
+    <div class="container">
+      <div class="sec-head sec-head--center">
+        <div class="eyebrow">კომპანიებისთვის</div>
+        <h2 class="sec-title">3 ნაბიჯი — კადრი მზადაა</h2>
+        <p class="sec-sub">მოთხოვნიდან სამუშაო ადგილამდე — 24 საათში.</p>
+      </div>
+
+      <div class="flow">
+        @for (step of companySteps; track step.num; let last = $last) {
+          <div class="flow__card">
+            <div class="flow__card-top">
+              <div class="flow__num">{{ step.num }}</div>
+              <div class="flow__icon" [style.background]="step.iconBg">{{ step.icon }}</div>
+            </div>
+            <div class="flow__tag">{{ step.tag }}</div>
+            <h3 class="flow__title">{{ step.title }}</h3>
+            <p class="flow__desc">{{ step.desc }}</p>
+            <div class="flow__chips">
+              @for (chip of step.chips; track chip) {
+                <span class="chip">{{ chip }}</span>
+              }
+            </div>
+          </div>
+          @if (!last) {
+            <div class="flow__connector">
+              <div class="flow__connector-line"></div>
+              <div class="flow__connector-arrow">→</div>
+            </div>
+          }
+        }
+      </div>
+
+      <!-- timeline bar -->
+      <div class="timeline">
+        <div class="timeline__label">სამუშაო პროცესი · სულ: 24 სთ-მდე</div>
+        <div class="timeline__track">
+          @for (seg of timelineSegments; track seg.label) {
+            <div class="timeline__seg"
+                 [style.width]="seg.width"
+                 [style.background]="seg.color">
+              {{ seg.label }}
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- comparison table -->
+  <section class="section comparison">
+    <div class="container container--narrow">
+      <div class="sec-head sec-head--center">
+        <div class="eyebrow">შედარება</div>
+        <h2 class="sec-title">WorkLine vs ტრადიციული სააგენტო</h2>
+        <p class="sec-sub">ნახეთ სხვაობა — ციფრებში.</p>
+      </div>
+
+      <div class="cmp-table">
+        <!-- header -->
+        <div class="cmp-table__row cmp-table__row--head">
+          <div class="cmp-table__feat"></div>
+          <div class="cmp-table__wl">
+            <span class="cmp-dot"></span> WorkLine
+          </div>
+          <div class="cmp-table__trad">ტრადიციული</div>
+        </div>
+        <!-- rows -->
+        @for (row of comparisonRows; track row.feature; let odd = $odd) {
+          <div class="cmp-table__row" [class.cmp-table__row--odd]="odd">
+            <div class="cmp-table__feat">
+              <span>{{ row.icon }}</span> {{ row.feature }}
+            </div>
+            <div class="cmp-table__wl">
+              <span class="badge badge--green">{{ row.wl }}</span>
+            </div>
+            <div class="cmp-table__trad">
+              <span class="badge badge--gray">{{ row.trad }}</span>
+            </div>
+          </div>
+        }
+      </div>
+
+   
+    </div>
+  </section>
+
+  <!-- sector diagram -->
+  <section class="section sectors">
+    <div class="container">
+      <div class="sectors__layout">
+
+        <div class="sectors__left">
+          <div class="eyebrow">სექტორები</div>
+          <h2 class="sec-title">ვინ<br>იყენებს<br>WorkLine-ს?</h2>
+          <p class="sec-sub">სხვადასხვა ბიზნეს ტიპი — ერთი სანდო პარტნიორი.</p>
+
+          <div class="bars">
+            <div class="bars__label">მოთხოვნა სექტორების მიხედვით</div>
+            @for (b of sectorBars; track b.name) {
+              <div class="bars__row">
+                <span class="bars__name">{{ b.name }}</span>
+                <div class="bars__track">
+                  <div class="bars__fill" [style.width]="b.pct" [style.background]="b.color"></div>
+                </div>
+                <span class="bars__pct">{{ b.pct }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="sectors__right">
+          <div class="bubbles">
+            @for (s of sectors; track s.name) {
+              <div class="bubble"
+                   [style.width]="s.size"
+                   [style.height]="s.size"
+                   [style.background]="s.bg"
+                   [style.border-color]="s.border">
+                <span class="bubble__icon">{{ s.icon }}</span>
+                <span class="bubble__name">{{ s.name }}</span>
+                @if (s.count) {
+                  <span class="bubble__count">{{ s.count }}</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+}
+
+<!-- ══════════════════════════════════════════
+     WORKERS TAB
+════════════════════════════════════════════ -->
+@if (activeTab() === 'workers') {
+
+  <section class="section worker">
+    <div class="container">
+      <div class="sec-head sec-head--center">
+        <div class="eyebrow">კადრებისთვის</div>
+        <h2 class="sec-title">შენი გზა WorkLine-ში</h2>
+        <p class="sec-sub">4 ნაბიჯი — სამუშაოდ გამოსვლამდე.</p>
+      </div>
+
+      <!-- journey map -->
+      <div class="journey">
+        <div class="journey__track"></div>
+        @for (step of workerSteps; track step.num; let i = $index) {
+          <div class="journey__step">
+            <div class="journey__dot" [class.journey__dot--active]="i === 0">
+              {{ step.icon }}
+            </div>
+            <div class="journey__card">
+              <div class="journey__num">{{ step.num }}</div>
+              <h4>{{ step.title }}</h4>
+              <p>{{ step.desc }}</p>
+              <div class="journey__time">⏱ {{ step.time }}</div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- spoke / benefits diagram -->
+      <div class="spoke-wrap">
+        <div class="spoke__center">
+          <span class="spoke__logo">WL</span>
+          <span class="spoke__sub">WorkLine</span>
+        </div>
+        @for (b of workerBenefits; track b.label; let i = $index) {
+          <div class="spoke__item" [attr.data-i]="i">
+            <div class="spoke__line"></div>
+            <div class="spoke__node">
+              <span class="spoke__icon">{{ b.icon }}</span>
+              <span class="spoke__lbl">{{ b.label }}</span>
+            </div>
+          </div>
+        }
+      </div>
+
+    </div>
+  </section>
+
+}
+
+<!-- ══════════════════════════════════════════
+     STATS BANNER
+════════════════════════════════════════════ -->
+<section class="stats">
+  <div class="stats__grid">
+    @for (s of stats; track s.num) {
+      <div class="stats__item">
+        <div class="stats__num">{{ s.num }}</div>
+        <div class="stats__bar">
+          <div class="stats__bar-fill" [style.width]="s.fill"></div>
+        </div>
+        <div class="stats__lbl">{{ s.label }}</div>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════ -->
+<section class="section faq" id="faq">
+  <div class="container">
+    <div class="faq__layout">
+
+      <div class="faq__list">
+        <div class="eyebrow">FAQ</div>
+        <h2 class="sec-title">ხშირი კითხვები</h2>
+        @for (item of faqs; track item.q; let i = $index) {
+          <div class="faq__item" [class.faq__item--open]="openFaqIndex === i" (click)="toggleFaq(i)">
+            <div class="faq__q">
+              <span class="faq__n">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              {{ item.q }}
+              <span class="faq__ch">{{ openFaqIndex === i ? '−' : '+' }}</span>
+            </div>
+            @if (openFaqIndex === i) {
+              <div class="faq__a">{{ item.a }}</div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="faq__contact">
+        <div class="faq__contact-icon">💬</div>
+        <h4>სხვა კითხვა გაქვთ?</h4>
+        <p>ჩვენი გუნდი მზადაა პასუხისთვის 2 საათში.</p>
+        <a href="#cta" class="faq__contact-btn">დაგვიწერეთ →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     CTA
+════════════════════════════════════════════ -->
+<section class="cta" id="cta">
+  <div class="container">
+    <div class="cta__box">
+      <div class="cta__left">
+        <div class="eyebrow eyebrow--light">მზად ხართ?</div>
+        <h2 class="cta__title">დავიწყოთ<br>დღეს</h2>
+        <p class="cta__sub">ერთი ზარი — WorkLine დანარჩენს მოაგვარებს.</p>
+      </div>
+      <div class="cta__actions">
+        <a href="#" class="cta__btn cta__btn--primary">კომპანია ვარ →</a>
+        <a href="#" class="cta__btn cta__btn--secondary">კადრი ვარ →</a>
+        <p class="cta__note">📞 +995 — გახსნილია 24/7</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer__logo">
+    <span class="nav__logo-mark">W</span>WorkLine
+  </div>
+  <p class="footer__note">© 2025 WorkLine. ყველა უფლება დაცულია.</p>
+</footer>
