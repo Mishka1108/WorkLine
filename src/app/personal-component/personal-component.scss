@@ -1,0 +1,677 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap');
+
+// ── Tokens ───────────────────────────────────
+$bg:          #0e0e0e;
+$bg2:         #111111;
+$bg3:         #1a1a1a;
+$border:      #282828;
+$border-lite: #1e1e1e;
+$gold:        #c9a84c;
+$gold-dim:    #a07832;
+$text:        #f0ece4;
+$text-2:      #908880;
+$text-3:      #4a4440;
+$danger:      #cc5555;
+$radius-sm:   8px;
+$radius-md:   12px;
+$radius-lg:   18px;
+
+// ── Keyframes ────────────────────────────────
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-32px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInBack {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes checkPop {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  60%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-5px); }
+  75%       { transform: translateX(5px); }
+}
+
+@keyframes progPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .7; }
+}
+
+// ── Overlay (scene) ───────────────────────────
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 16px 32px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: overlayIn .22s ease;
+  overflow-y: auto;
+  font-family: 'BPG Arial', 'Sylfaen', Georgia, serif;
+  color: $text;
+}
+
+// ── Modal card ────────────────────────────────
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  background: $bg2;
+  border: 1px solid $border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  animation: slideDown .38s cubic-bezier(.22, 1, .36, 1);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04),
+    0 24px 64px rgba(0,0,0,.6),
+    0 8px 24px rgba(0,0,0,.4);
+  margin-bottom: 32px;
+}
+
+// ── Close button ──────────────────────────────
+.modal-close {
+    margin-top: 30px;
+    margin-right: 4px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.05);
+  border: 1px solid $border;
+  border-radius: 50%;
+  color: $text-3;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+  z-index: 20;
+
+  &:hover {
+    background: rgba(255,255,255,.1);
+    border-color: $text-3;
+    color: $text;
+  }
+}
+
+// ── Progress bar ──────────────────────────────
+.prog-bg {
+  height: 2px;
+  background: $border;
+  width: 100%;
+}
+
+.prog-fill {
+  height: 2px;
+  background: linear-gradient(90deg, $gold-dim, $gold);
+  transition: width .5s cubic-bezier(.22, 1, .36, 1);
+  animation: progPulse 2.5s ease infinite;
+}
+
+// ── Step dots ─────────────────────────────────
+.step-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px 0;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $border;
+  flex-shrink: 0;
+  transition: background .3s, transform .3s;
+
+  &.done   { background: rgba($gold, .5); }
+  &.active {
+    background: $gold;
+    transform: scale(1.7);
+    box-shadow: 0 0 8px rgba($gold, .5);
+  }
+}
+
+.dot-label {
+  font-size: 11px;
+  color: $text-3;
+  margin-left: auto;
+  letter-spacing: .05em;
+}
+
+// ── Modal body ────────────────────────────────
+.mbody {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.slabel {
+  font-size: 10px;
+  color: $gold;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin: 0 0 5px;
+}
+
+.stitle {
+  font-size: 19px;
+  font-weight: 400;
+  font-style: italic;
+  color: $text;
+  margin: 0 0 1.25rem;
+  font-family: 'Playfair Display', serif;
+}
+
+// ── Form fields ───────────────────────────────
+.field {
+  margin-bottom: .85rem;
+
+  label {
+    display: block;
+    font-size: 11px;
+    color: $text-2;
+    margin-bottom: 5px;
+    letter-spacing: .03em;
+  }
+
+  &.has-error input,
+  &.has-error select,
+  &.has-error textarea {
+    border-color: $danger !important;
+    box-shadow: 0 0 0 3px rgba($danger, .08);
+  }
+}
+
+.opt-label {
+  color: $text-3;
+  font-weight: 400;
+}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=number],
+input[type=date],
+select,
+textarea {
+  width: 100%;
+  background: $bg3;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  color: $text;
+  font-size: 13px;
+  font-family: inherit;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::placeholder { color: $text-3; }
+
+  &:focus {
+    border-color: rgba($gold, .5);
+    box-shadow: 0 0 0 3px rgba($gold, .07);
+  }
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a4440' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 32px;
+  cursor: pointer;
+  option { background: $bg3; }
+}
+
+textarea {
+  height: 72px;
+  resize: none;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+// ── Chips ─────────────────────────────────────
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.chip {
+  padding: 5px 12px;
+  border: 1px solid $border;
+  border-radius: 100px;
+  font-size: 12px;
+  color: $text-2;
+  cursor: pointer;
+  background: transparent;
+  user-select: none;
+  font-family: inherit;
+  transition: all .15s;
+
+  &:hover { border-color: $gold-dim; color: $text; }
+
+  &.active {
+    background: rgba($gold, .1);
+    border-color: $gold;
+    color: $gold;
+  }
+}
+
+// ── Avail cards ───────────────────────────────
+.avail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.medbook-grid {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.avail-card {
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: 10px 12px;
+  cursor: pointer;
+  background: transparent;
+  transition: border-color .2s, background .15s;
+
+  p { margin: 0; }
+
+  &:hover { border-color: rgba($gold, .4); background: rgba($gold, .02); }
+
+  &.active {
+    border-color: $gold;
+    background: rgba($gold, .06);
+    .av-t { color: $gold; }
+  }
+}
+
+.av-t {
+  font-size: 13px;
+  font-weight: 500;
+  color: $text;
+  transition: color .2s;
+}
+
+.av-s {
+  font-size: 11px;
+  color: $text-3;
+  margin-top: 2px !important;
+}
+
+// ── Toggle list ───────────────────────────────
+.toggle-list {
+  border: 1px solid $border;
+  border-radius: $radius-md;
+  padding: 2px 12px;
+  background: $bg3;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid $border-lite;
+  cursor: pointer;
+  &:last-child { border-bottom: none; }
+}
+
+.toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  padding-right: 12px;
+}
+
+.toggle-title { font-size: 13px; color: $text; }
+.toggle-sub   { font-size: 11px; color: $text-3; }
+
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+  }
+}
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: $border;
+  transition: background .2s;
+  width: 36px;
+  height: 20px;
+}
+
+.toggle input:checked + .toggle-track { background: $gold; }
+
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: $bg2;
+  transition: transform .2s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.toggle input:checked ~ .toggle-thumb { transform: translateX(16px); }
+
+// ── Certs ─────────────────────────────────────
+.cert-list { margin-bottom: 8px; }
+
+.cert-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid $border-lite;
+  border-radius: $radius-sm;
+  margin-bottom: 6px;
+  background: $bg3;
+  animation: fadeUp .2s ease;
+  svg { color: $gold; flex-shrink: 0; }
+}
+
+.cert-name { flex: 1; font-size: 13px; color: $text; }
+
+.cert-remove {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: $text-3;
+  display: flex;
+  align-items: center;
+  transition: color .15s;
+  &:hover { color: $danger; }
+}
+
+.cert-add-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+  input { flex: 1; }
+}
+
+.cert-add-btn {
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  color: $text-2;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: all .15s;
+  &:hover { border-color: $gold-dim; color: $gold; background: rgba($gold,.04); }
+}
+
+// ── Upload ────────────────────────────────────
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 1px dashed $border;
+  border-radius: $radius-md;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, background .15s;
+  position: relative;
+
+  input[type=file] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  svg { color: $text-3; margin-bottom: 2px; }
+
+  &:hover { border-color: $gold-dim; background: rgba($gold,.02); }
+}
+
+.upload-sm { padding: .6rem; }
+.upload-label { font-size: 13px; color: $text-2; word-break: break-all; }
+.upload-sub   { font-size: 11px; color: $text-3; }
+
+// ── Social ────────────────────────────────────
+.social-row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-3;
+}
+
+// ── Nav buttons ───────────────────────────────
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.25rem;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 16px;
+  background: transparent;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  color: $text-2;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+  white-space: nowrap;
+  &:hover { background: $bg3; color: $text; }
+}
+
+.btn-next {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px;
+  background: $gold;
+  color: #0a0a0a;
+  border: none;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: .03em;
+  transition: background .2s, transform .1s;
+
+  svg { transition: transform .2s; }
+  &:hover { background: lighten($gold, 7%); svg { transform: translateX(2px); } }
+  &:active { transform: scale(.98); }
+  &.shake { animation: shake .35s ease; }
+}
+
+// ── Errors ────────────────────────────────────
+.err-msg {
+  font-size: 12px;
+  color: $danger;
+  margin-top: 6px;
+  display: none;
+  &.show { display: block; }
+}
+
+.privacy-note {
+  font-size: 11px;
+  color: $text-3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 6px 0 0;
+  svg { flex-shrink: 0; }
+}
+
+// ── Step animations ───────────────────────────
+.anim-forward { animation: slideIn .25s cubic-bezier(.22,1,.36,1); }
+.anim-back    { animation: slideInBack .25s cubic-bezier(.22,1,.36,1); }
+
+// ── Success ───────────────────────────────────
+.success-modal .mbody { padding: 0; }
+
+.success-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem 1.75rem;
+  animation: fadeUp .4s ease;
+}
+
+.s-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba($gold,.08);
+  border: 1px solid rgba($gold,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $gold;
+  margin-bottom: 1rem;
+  animation: checkPop .5s cubic-bezier(.22,1,.36,1) .1s both;
+}
+
+.s-title {
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: $text;
+  margin: 0 0 6px;
+  font-family: 'Playfair Display', serif;
+}
+
+.s-sub {
+  font-size: 14px;
+  color: $text-2;
+  margin: 0 0 1.25rem;
+  line-height: 1.6;
+}
+
+.s-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.s-chip {
+  padding: 4px 12px;
+  border: 1px solid $border;
+  border-radius: 100px;
+  font-size: 12px;
+  color: $text-2;
+  background: $bg3;
+}
+
+.summary-table {
+  background: $bg3;
+  border-radius: $radius-md;
+  border: 1px solid $border-lite;
+  padding: 4px 14px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.25rem;
+}
+
+.sr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid $border-lite;
+  gap: 8px;
+  &:last-child { border-bottom: none; }
+}
+
+.sk { color: $text-3; white-space: nowrap; }
+.sv {
+  color: $text;
+  font-weight: 500;
+  text-align: right;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ── Responsive ────────────────────────────────
+@media (max-width: 480px) {
+  .scene { padding: 32px 12px 24px; }
+  .row2 { grid-template-columns: 1fr; }
+  .medbook-grid { grid-template-columns: repeat(3,1fr); }
+}

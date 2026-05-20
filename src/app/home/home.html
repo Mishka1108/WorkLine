@@ -18,7 +18,7 @@
 
       <div class="hero-cta-row">
         <a href="#companies" class="btn-primary">მე კომპანია ვარ →</a>
-        <a href="#workers" class="btn-outline">მე კადრი ვარ →</a>
+        <a (click)="showRegistration = true; $event.preventDefault()" class="btn-outline">მე კადრი ვარ →</a>
       </div>
 
       <div class="hero-stats">
@@ -250,3 +250,8 @@
       </div>
     </div>
   </section>
+  <app-personal-component
+    *ngIf="showRegistration"
+    (closed)="showRegistration = false">
+  </app-personal-component>
+  
